@@ -3135,3 +3135,160 @@ Certainly! Here’s an expanded look into even more advanced Redis commands, usa
      ```sh
      CONFIG SET notify-keyspace-events KEA
      ```
+
+### Continue Advanced Redis Commands and Concepts
+
+#### **1. **BITOP**
+   - **Description**: Performs bitwise operations between multiple strings and stores the result in the destination key.
+   - **Syntax**: `BITOP operation destkey key [key ...]`
+   - **Example**:
+     ```sh
+     BITOP AND result key1 key2
+     ```
+   - **Output**:
+     ```sh
+     (integer) 1
+     ```
+
+#### **2. **BITFIELD**
+   - **Description**: Manipulates and queries specific integer fields of varying bit widths within a Redis string value.
+   - **Syntax**: `BITFIELD key [GET type offset] [SET type offset value] [INCRBY type offset increment]`
+   - **Example**:
+     ```sh
+     BITFIELD mykey INCRBY i5 100 1
+     ```
+   - **Output**:
+     ```sh
+     1) (integer) 1
+     ```
+
+#### **3. **PFADD**
+   - **Description**: Adds elements to a HyperLogLog data structure.
+   - **Syntax**: `PFADD key element [element ...]`
+   - **Example**:
+     ```sh
+     PFADD myhyperloglog element1 element2
+     ```
+   - **Output**:
+     ```sh
+     (integer) 1
+     ```
+
+#### **4. **PFCOUNT**
+   - **Description**: Returns the approximated cardinality of the HyperLogLog at key(s).
+   - **Syntax**: `PFCOUNT key [key ...]`
+   - **Example**:
+     ```sh
+     PFCOUNT myhyperloglog
+     ```
+   - **Output**:
+     ```sh
+     (integer) 2
+     ```
+
+#### **5. **ACL Commands**
+   - **Description**: Manages Redis Access Control Lists (ACLs).
+   - **Syntax**:
+     - **ACL SETUSER**: Sets the rules for a specific user.
+       ```sh
+       ACL SETUSER username nopass +@all -@dangerous
+       ```
+     - **ACL LOG**: Displays the latest events for the ACLs system.
+       ```sh
+       ACL LOG
+       ```
+
+#### **6. **CLIENT PAUSE**
+   - **Description**: Stops processing clients for a specified amount of time.
+   - **Syntax**: `CLIENT PAUSE timeout`
+   - **Example**:
+     ```sh
+     CLIENT PAUSE 1000
+     ```
+   - **Output**: None
+
+#### **7. **MODULE Commands**
+   - **Description**: Manages Redis modules.
+   - **Syntax**:
+     - **MODULE LIST**: Lists all loaded modules.
+       ```sh
+       MODULE LIST
+       ```
+     - **MODULE LOAD**: Loads a new module.
+       ```sh
+       MODULE LOAD /path/to/module.so
+       ```
+
+#### **8. **SCRIPT Commands**
+   - **Description**: Executes Lua scripts within Redis.
+   - **Syntax**:
+     - **EVAL**: Evaluates a Lua script with arguments.
+       ```sh
+       EVAL "return redis.call('SET', KEYS[1], ARGV[1])" 1 mykey value
+       ```
+     - **SCRIPT EXISTS**: Checks existence of scripts in the script cache.
+       ```sh
+       SCRIPT EXISTS sha1 sha2
+       ```
+
+#### **9. **GEO Commands**
+   - **Description**: Manages geospatial data in Redis.
+   - **Syntax**:
+     - **GEOADD**: Adds geospatial items (latitude, longitude, member) to a key.
+       ```sh
+       GEOADD mygeo 13.361389 38.115556 "Palermo"
+       ```
+     - **GEORADIUSBYMEMBER**: Returns geospatial items within the radius of a member.
+       ```sh
+       GEORADIUSBYMEMBER mygeo "Palermo" 200 km
+       ```
+
+#### **10. **MEMORY Commands**
+   - **Description**: Provides information about Redis memory usage and configuration.
+   - **Syntax**:
+     - **MEMORY USAGE**: Reports the memory usage of a key.
+       ```sh
+       MEMORY USAGE mykey
+       ```
+     - **MEMORY PURGE**: Purges in-memory data across all databases.
+       ```sh
+       MEMORY PURGE
+       ```
+
+### Advanced Usage Scenarios
+
+#### **1. **Redis Streams**
+   - **Description**: Ideal for managing event sourcing and real-time data processing.
+   - **Usage**: Used in applications requiring ordered message processing with consumer groups.
+
+#### **2. **Redis Modules**
+   - **Description**: Extends Redis functionalities (e.g., search, graph processing) without modifying Redis core.
+   - **Usage**: Implements complex data structures and algorithms via modules like RedisJSON, RedisGraph, and RedisTimeSeries.
+
+#### **3. **Performance Optimization**
+   - **Description**: Utilizes Redis clustering, sharding, and replication to enhance throughput and fault tolerance.
+   - **Usage**: Configures Redis persistence, eviction policies, and memory management for optimal performance.
+
+### Advanced Configuration and Management
+
+#### **1. **Redis Cluster**
+   - **Description**: Scales Redis horizontally by partitioning data across multiple nodes.
+   - **Configuration**: Involves setting up node communication and failover mechanisms with CLUSTER commands.
+
+#### **2. **Redis Sentinel**
+   - **Description**: Provides high availability for Redis instances by monitoring and managing failover.
+   - **Configuration**: Configures monitoring parameters and automatic failover policies using SENTINEL commands.
+
+#### **3. **Redis Security**
+   - **Description**: Controls access to Redis instances through ACLs and network security configurations.
+   - **Configuration**: Uses ACL SETUSER to define user permissions and applies IP filtering to restrict access.
+
+### Advanced Monitoring and Debugging
+
+#### **1. **Redis Monitoring**
+   - **Description**: Monitors Redis performance metrics and client interactions in real-time.
+   - **Tools**: Utilizes commands like MONITOR, INFO, and SLOWLOG for diagnostics and performance tuning.
+
+#### **2. **Redis Debugging**
+   - **Description**: Analyzes Redis keyspaces, memory usage, and Lua script execution for troubleshooting.
+   - **Utilities**: Employs DEBUG OBJECT for detailed insights into individual keys and SCRIPT DEBUG for Lua script debugging.

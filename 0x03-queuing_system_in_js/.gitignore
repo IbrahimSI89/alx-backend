@@ -1,0 +1,9 @@
+# Node modules
+node_modules/
+
+# Redis folder and its contents
+redis-6.0.10/
+
+# Package files
+package.json
+package-lock.json
